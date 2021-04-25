@@ -381,6 +381,10 @@ namespace ResumeApi.Controllers
         public ActionResult post([FromBody] Resume newResume)
         {
             ResumeRepository.Resumes.Add(newResume);
+
+            if (ResumeRepository.Resumes.FirstOrDefault(resume => resume.basics.name == newResume.basics.name) != null)
+                Conflict("Already exist");
+
             return StatusCode((int)HttpStatusCode.NoContent);
         }
 
@@ -388,6 +392,10 @@ namespace ResumeApi.Controllers
         public ActionResult postProfiel(string name, [FromBody] Profile newProfile)
         {
             Resume resume = GetResumeByName(name);
+
+            if (resume.basics.profiles.FirstOrDefault(item => item.network == newProfile.network) != null)
+                Conflict("Already exist");
+
             resume.basics.profiles.Add(newProfile);
             return NoContent();
         }
@@ -396,6 +404,10 @@ namespace ResumeApi.Controllers
         public ActionResult postwork(string name, [FromBody] Work newWork)
         {
             Resume resume = GetResumeByName(name);
+
+            if (resume.work.FirstOrDefault(item => item.company == newWork.company) != null)
+                Conflict("Already exist");
+
             resume.work.Add(newWork);
             return NoContent();
         }
@@ -404,6 +416,10 @@ namespace ResumeApi.Controllers
         public ActionResult postVolunteer(string name, [FromBody] Volunteer newVolunteer)
         {
             Resume resume = GetResumeByName(name);
+
+            if (resume.volunteer.FirstOrDefault(item => item.organization == newVolunteer.organization) != null)
+                Conflict("Already exist");
+
             resume.volunteer.Add(newVolunteer);
             return NoContent();
         }
@@ -412,6 +428,11 @@ namespace ResumeApi.Controllers
         public ActionResult postEducation(string name, [FromBody] Education newEducation)
         {
             Resume resume = GetResumeByName(name);
+
+
+            if (resume.education.FirstOrDefault(item => item.institution == newEducation.institution) != null)
+                Conflict("Already exist");
+
             resume.education.Add(newEducation);
             return NoContent();
         }
@@ -420,6 +441,10 @@ namespace ResumeApi.Controllers
         public ActionResult postAward(string name, [FromBody] Award newAward)
         {
             Resume resume = GetResumeByName(name);
+
+            if (resume.awards.FirstOrDefault(item => item.title == newAward.title) != null)
+                Conflict("Already exist");
+
             resume.awards.Add(newAward);
             return NoContent();
         }
@@ -428,6 +453,10 @@ namespace ResumeApi.Controllers
         public ActionResult postPublications(string name, [FromBody] Publication newPublication)
         {
             Resume resume = GetResumeByName(name);
+
+            if (resume.publications.FirstOrDefault(item => item.name == newPublication.name) != null)
+                Conflict("Already exist");
+
             resume.publications.Add(newPublication);
             return NoContent();
         }
@@ -437,6 +466,10 @@ namespace ResumeApi.Controllers
         public ActionResult postSkills(string name, [FromBody] Skill newSkill)
         {
             Resume resume = GetResumeByName(name);
+
+            if (resume.skills.FirstOrDefault(item => item.name == newSkill.name) != null)
+                Conflict("Already exist");
+
             resume.skills.Add(newSkill);
             return NoContent();
         }
@@ -445,6 +478,10 @@ namespace ResumeApi.Controllers
         public ActionResult postLanguages(string name, [FromBody] Language newLanguage)
         {
             Resume resume = GetResumeByName(name);
+
+            if (resume.languages.FirstOrDefault(item => item.language == newLanguage.language) != null)
+                Conflict("Already exist");
+
             resume.languages.Add(newLanguage);
             return NoContent();
         }
@@ -453,6 +490,10 @@ namespace ResumeApi.Controllers
         public ActionResult postInterests(string name, [FromBody] Interest newInterest)
         {
             Resume resume = GetResumeByName(name);
+
+            if (resume.interests.FirstOrDefault(item => item.name == newInterest.name) != null)
+                Conflict("Already exist");
+
             resume.interests.Add(newInterest);
             return NoContent();
         }
@@ -461,6 +502,10 @@ namespace ResumeApi.Controllers
         public ActionResult postReferences(string name, [FromBody] Reference newReference)
         {
             Resume resume = GetResumeByName(name);
+
+            if (resume.references.FirstOrDefault(item => item.name == newReference.name) != null)
+                Conflict("Already exist");
+
             resume.references.Add(newReference);
             return NoContent();
         }
