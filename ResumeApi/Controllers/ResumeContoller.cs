@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using ResumeApi.Models;
 using ResumeApi.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ResumeApi.Controllers
@@ -25,8 +28,39 @@ namespace ResumeApi.Controllers
             return ResumeRepository.Resumes.FindIndex(resume => resume.basics.name == name);
         }
 
+        private string GenerateEtag(string model)
+        {
+            string randomNumber = new Random().Next(1, 10000).ToString();
+            string key = model + randomNumber;
+            byte[] data = Encoding.UTF8.GetBytes(key);
+            using (var md5 = MD5.Create())
+            {
+                var hash = md5.ComputeHash(data);
+                string hex = BitConverter.ToString(hash);
+                return hex.Replace("-", "");
+            }
+        }
+
+        private void SetEtag(Resume resume)
+        {
+            string etag = GenerateEtag(JsonConvert.SerializeObject(resume));
+            if(ResumeRepository.etags.ContainsKey(resume.basics.name.Replace(" ", String.Empty)))
+            {
+                ResumeRepository.etags[resume.basics.name.Replace(" ", String.Empty)] = etag;
+
+            }
+            else
+            {
+                ResumeRepository.etags.Add(resume.basics.name.Replace(" ", String.Empty), etag);
+            }
+
+            string etagAll = GenerateEtag(JsonConvert.SerializeObject(ResumeRepository.Resumes));
+            ResumeRepository.etag = etagAll;
+        }
+
         #region GET
-        // GET: ResumeContoller
+
+        [ETagFilter]
         [HttpGet]
         public ActionResult<List<Resume>> Get()
         {
@@ -34,6 +68,7 @@ namespace ResumeApi.Controllers
             return Ok(resumes);
         }
 
+        [ETagFilter]
         [HttpGet("{name}")]
         public ActionResult<Resume> GetByName(string name)
         {
@@ -45,6 +80,7 @@ namespace ResumeApi.Controllers
             return Ok(resume);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/basics")]
         public ActionResult<Basics> GetBasics(string name)
         {
@@ -57,6 +93,7 @@ namespace ResumeApi.Controllers
             return Ok(basics);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/basics/location")]
         public ActionResult<Location> GetLocation(string name)
         {
@@ -69,6 +106,7 @@ namespace ResumeApi.Controllers
             return Ok(location);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/basics/profiles")]
         public ActionResult<List<Profile>> GetProfiles(string name)
         {
@@ -81,6 +119,7 @@ namespace ResumeApi.Controllers
             return Ok(profiles);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/basics/profile/{network}")]
         public ActionResult<Profile> GetProfile(string name, string network)
         {
@@ -98,6 +137,7 @@ namespace ResumeApi.Controllers
             return Ok(profile);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/work")]
         public ActionResult<List<Work>> GetWork(string name)
         {
@@ -112,6 +152,7 @@ namespace ResumeApi.Controllers
             return Ok(works);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/work/{company}")]
         public ActionResult<Work> GetWork(string name, string company)
         {
@@ -130,7 +171,7 @@ namespace ResumeApi.Controllers
             return Ok(work);
         }
 
-
+        [ETagFilter]
         [HttpGet("{name}/volunteer")]
         public ActionResult<List<Volunteer>> GetVolunteer(string name)
         {
@@ -145,6 +186,7 @@ namespace ResumeApi.Controllers
             return Ok(volunteer);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/volunteer/{organization}")]
         public ActionResult<Volunteer> GetVolunteer(string name, string organization)
         {
@@ -162,6 +204,7 @@ namespace ResumeApi.Controllers
             return Ok(volunteer);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/education")]
         public ActionResult<List<Education>> GetEducation(string name)
         {
@@ -176,6 +219,7 @@ namespace ResumeApi.Controllers
             return Ok(education);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/education/{institution}")]
         public ActionResult<Education> GetEducation(string name, string institution)
         {
@@ -192,6 +236,7 @@ namespace ResumeApi.Controllers
             return Ok(education);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/awards")]
         public ActionResult<List<Award>> GetAward(string name)
         {
@@ -206,6 +251,7 @@ namespace ResumeApi.Controllers
             return Ok(award);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/awards/{title}")]
         public ActionResult<Award> GetAward(string name, string title)
         {
@@ -222,6 +268,7 @@ namespace ResumeApi.Controllers
             return Ok(award);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/publications")]
         public ActionResult<List<Publication>> GetPublication(string name)
         {
@@ -236,6 +283,7 @@ namespace ResumeApi.Controllers
             return Ok(publications);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/publications/{publicationName}")]
         public ActionResult<Publication> GetPublication(string name, string publicationName)
         {
@@ -252,6 +300,7 @@ namespace ResumeApi.Controllers
             return Ok(publication);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/skills")]
         public ActionResult<List<Skill>> GetSkill(string name)
         {
@@ -266,6 +315,7 @@ namespace ResumeApi.Controllers
             return Ok(skills);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/skills/{skillName}")]
         public ActionResult<Skill> GetSkill(string name, string skillName)
         {
@@ -282,6 +332,7 @@ namespace ResumeApi.Controllers
             return Ok(skill);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/languages")]
         public ActionResult<List<Language>> GetLanguage(string name)
         {
@@ -296,6 +347,7 @@ namespace ResumeApi.Controllers
             return Ok(languages);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/languages/{languageName}")]
         public ActionResult<Language> GetLanguage(string name, string languageName)
         {
@@ -312,6 +364,7 @@ namespace ResumeApi.Controllers
             return Ok(language);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/interests")]
         public ActionResult<List<Interest>> GetInterest(string name)
         {
@@ -326,6 +379,7 @@ namespace ResumeApi.Controllers
             return Ok(interests);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/interests/{interestName}")]
         public ActionResult<Interest> GetInterest(string name, string interestName)
         {
@@ -342,6 +396,7 @@ namespace ResumeApi.Controllers
             return Ok(interest);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/references")]
         public ActionResult<List<Reference>> GetReference(string name)
         {
@@ -356,6 +411,7 @@ namespace ResumeApi.Controllers
             return Ok(references);
         }
 
+        [ETagFilter]
         [HttpGet("{name}/references/{referenceName}")]
         public ActionResult<Reference> GetReference(string name, string referenceName)
         {
@@ -381,11 +437,12 @@ namespace ResumeApi.Controllers
         [HttpPost]
         public ActionResult post([FromBody] Resume newResume)
         {
+            if (ResumeRepository.Resumes.FirstOrDefault(resume => resume.basics.name == newResume.basics.name) != null)
+                return Conflict("Already exist");
+
             ResumeRepository.Resumes.Add(newResume);
 
-            if (ResumeRepository.Resumes.FirstOrDefault(resume => resume.basics.name == newResume.basics.name) != null)
-                Conflict("Already exist");
-
+            SetEtag(newResume);
             return StatusCode((int)HttpStatusCode.NoContent);
         }
 
@@ -396,9 +453,10 @@ namespace ResumeApi.Controllers
             Resume resume = GetResumeByName(name);
 
             if (resume.basics.profiles.FirstOrDefault(item => item.network == newProfile.network) != null)
-                Conflict("Already exist");
+                return Conflict("Already exist");
 
             resume.basics.profiles.Add(newProfile);
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -409,9 +467,10 @@ namespace ResumeApi.Controllers
             Resume resume = GetResumeByName(name);
 
             if (resume.work.FirstOrDefault(item => item.company == newWork.company) != null)
-                Conflict("Already exist");
+                return Conflict("Already exist");
 
             resume.work.Add(newWork);
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -422,9 +481,10 @@ namespace ResumeApi.Controllers
             Resume resume = GetResumeByName(name);
 
             if (resume.volunteer.FirstOrDefault(item => item.organization == newVolunteer.organization) != null)
-                Conflict("Already exist");
+                return Conflict("Already exist");
 
             resume.volunteer.Add(newVolunteer);
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -435,9 +495,10 @@ namespace ResumeApi.Controllers
 
 
             if (resume.education.FirstOrDefault(item => item.institution == newEducation.institution) != null)
-                Conflict("Already exist");
+                return Conflict("Already exist");
 
             resume.education.Add(newEducation);
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -448,9 +509,10 @@ namespace ResumeApi.Controllers
             Resume resume = GetResumeByName(name);
 
             if (resume.awards.FirstOrDefault(item => item.title == newAward.title) != null)
-                Conflict("Already exist");
+                return  Conflict("Already exist");
 
             resume.awards.Add(newAward);
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -460,9 +522,10 @@ namespace ResumeApi.Controllers
             Resume resume = GetResumeByName(name);
 
             if (resume.publications.FirstOrDefault(item => item.name == newPublication.name) != null)
-                Conflict("Already exist");
+                return Conflict("Already exist");
 
             resume.publications.Add(newPublication);
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -473,9 +536,10 @@ namespace ResumeApi.Controllers
             Resume resume = GetResumeByName(name);
 
             if (resume.skills.FirstOrDefault(item => item.name == newSkill.name) != null)
-                Conflict("Already exist");
+                return Conflict("Already exist");
 
             resume.skills.Add(newSkill);
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -486,9 +550,10 @@ namespace ResumeApi.Controllers
             Resume resume = GetResumeByName(name);
 
             if (resume.languages.FirstOrDefault(item => item.language == newLanguage.language) != null)
-                Conflict("Already exist");
+                return Conflict("Already exist");
 
             resume.languages.Add(newLanguage);
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -498,9 +563,10 @@ namespace ResumeApi.Controllers
             Resume resume = GetResumeByName(name);
 
             if (resume.interests.FirstOrDefault(item => item.name == newInterest.name) != null)
-                Conflict("Already exist");
+                return Conflict("Already exist");
 
             resume.interests.Add(newInterest);
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -511,9 +577,10 @@ namespace ResumeApi.Controllers
             Resume resume = GetResumeByName(name);
 
             if (resume.references.FirstOrDefault(item => item.name == newReference.name) != null)
-                Conflict("Already exist");
+                return Conflict("Already exist");
 
             resume.references.Add(newReference);
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -534,6 +601,9 @@ namespace ResumeApi.Controllers
                 return NotFound("resume not found");
 
             ResumeRepository.Resumes.Remove(resume);
+            ResumeRepository.etags.Remove(resume.basics.name.Replace(" ", String.Empty));
+            string etagAll = GenerateEtag(JsonConvert.SerializeObject(ResumeRepository.Resumes));
+            ResumeRepository.etag = etagAll;
 
             return StatusCode((int)HttpStatusCode.NoContent);
         }
@@ -554,7 +624,7 @@ namespace ResumeApi.Controllers
                 return NotFound("profile not found");
 
             resume.basics.profiles.Remove(profile);
-
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -574,7 +644,7 @@ namespace ResumeApi.Controllers
                 return NotFound("work not found");
 
             resume.work.Remove(work);
-
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -594,6 +664,7 @@ namespace ResumeApi.Controllers
                 return NotFound("volunteer not found");
 
             resume.volunteer.Remove(volunteer);
+            SetEtag(resume);
             return NoContent();
 
         }
@@ -613,6 +684,7 @@ namespace ResumeApi.Controllers
                 return NotFound("education not found");
 
             resume.education.Remove(education);
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -631,6 +703,7 @@ namespace ResumeApi.Controllers
                 return NotFound("award not found");
 
             resume.awards.Remove(award);
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -649,6 +722,7 @@ namespace ResumeApi.Controllers
                 return NotFound("publication not found");
 
             resume.publications.Remove(publication);
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -667,6 +741,7 @@ namespace ResumeApi.Controllers
                 return NotFound("skill not found");
 
             resume.skills.Remove(skill);
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -685,6 +760,7 @@ namespace ResumeApi.Controllers
                 return NotFound("language not found");
 
             resume.languages.Remove(language);
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -703,6 +779,7 @@ namespace ResumeApi.Controllers
                 return NotFound("reference not found");
 
             resume.references.Remove(reference);
+            SetEtag(resume);
             return NoContent();
         }
 
@@ -712,6 +789,7 @@ namespace ResumeApi.Controllers
 
         #region PUT
 
+        [ETagFilter]
         [BasicAuthentication]
         [HttpPut("{name}")]
         public ActionResult put(string name, [FromBody] Resume newResume)
@@ -719,14 +797,21 @@ namespace ResumeApi.Controllers
 
             int resumeIndex = GetResumeIndexByName(name);
 
+
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
+            string nameBefore = ResumeRepository.Resumes[resumeIndex].basics.name;
             ResumeRepository.Resumes[resumeIndex] = newResume;
 
+            if (nameBefore != newResume.basics.name)
+                ResumeRepository.etags.Remove(nameBefore.Replace(" ", String.Empty));
+
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
             return StatusCode((int)HttpStatusCode.NoContent);
         }
 
+        [ETagFilter]
         [BasicAuthentication]
         [HttpPut("{name}/basics")]
         public ActionResult PutBasic(string name, [FromBody] Basics newBasic)
@@ -738,11 +823,12 @@ namespace ResumeApi.Controllers
                 return NotFound("resume not found");
 
             ResumeRepository.Resumes[resumeIndex].basics = newBasic;
-
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
             return NoContent();
 
         }
 
+        [ETagFilter]
         [BasicAuthentication]
         [HttpPut("{name}/basics/location")]
         public ActionResult PutLocation(string name, [FromBody] Location newLocation)
@@ -754,10 +840,11 @@ namespace ResumeApi.Controllers
                 return NotFound("resume not found");
 
             ResumeRepository.Resumes[resumeIndex].basics.location = newLocation;
-
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
             return NoContent();
         }
 
+        [ETagFilter]
         [BasicAuthentication]
         [HttpPut("{name}/basics/profiles/{network}")]
         public ActionResult PutLocation(string name, string network, [FromBody] Profile newProfile)
@@ -774,10 +861,11 @@ namespace ResumeApi.Controllers
                 return NotFound("profile not found");
 
             ResumeRepository.Resumes[resumeIndex].basics.profiles[profileIndex] = newProfile;
-
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
             return NoContent();
         }
 
+        [ETagFilter]
         [BasicAuthentication]
         [HttpPut("{name}/work/{company}")]
         public ActionResult PutWork(string name, string company, [FromBody] Work newWork)
@@ -794,10 +882,11 @@ namespace ResumeApi.Controllers
                 return NotFound("work not found");
 
             ResumeRepository.Resumes[resumeIndex].work[workIndex] = newWork;
-
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
             return NoContent();
         }
 
+        [ETagFilter]
         [BasicAuthentication]
         [HttpPut("{name}/volunteer/{organization}")]
         public ActionResult PutVolunteer(string name, string organization, [FromBody] Volunteer newVolunteer)
@@ -814,10 +903,11 @@ namespace ResumeApi.Controllers
                 return NotFound("volunteer not found");
 
             ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex] = newVolunteer;
-
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
             return NoContent();
         }
 
+        [ETagFilter]
         [BasicAuthentication]
         [HttpPut("{name}/education/{institution}")]
         public ActionResult PutEducation(string name, string institution, [FromBody] Education newEducation)
@@ -834,10 +924,11 @@ namespace ResumeApi.Controllers
                 return NotFound("education not found");
 
             ResumeRepository.Resumes[resumeIndex].education[educationIndex] = newEducation;
-
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
             return NoContent();
         }
 
+        [ETagFilter]
         [BasicAuthentication]
         [HttpPut("{name}/awards/{title}")]
         public ActionResult PutAwards(string name, string title, [FromBody] Award newAward)
@@ -854,10 +945,11 @@ namespace ResumeApi.Controllers
                 return NotFound("award not found");
 
             ResumeRepository.Resumes[resumeIndex].awards[awardIndex] = newAward;
-
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
             return NoContent();
         }
 
+        [ETagFilter]
         [BasicAuthentication]
         [HttpPut("{name}/publications/{publicationName}")]
         public ActionResult PutPublications(string name, string publicationName, [FromBody] Publication newPublication)
@@ -874,10 +966,11 @@ namespace ResumeApi.Controllers
                 return NotFound("publication not found");
 
             ResumeRepository.Resumes[resumeIndex].publications[publicationIndex] = newPublication;
-
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
             return NoContent();
         }
 
+        [ETagFilter]
         [BasicAuthentication]
         [HttpPut("{name}/skills/{skillName}")]
         public ActionResult PutSkill(string name, string skillName, [FromBody] Skill newSkill)
@@ -894,10 +987,11 @@ namespace ResumeApi.Controllers
                 return NotFound("skill not found");
 
             ResumeRepository.Resumes[resumeIndex].skills[skillIndex] = newSkill;
-
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
             return NoContent();
         }
 
+        [ETagFilter]
         [BasicAuthentication]
         [HttpPut("{name}/languages/{language}")]
         public ActionResult PutSkill(string name, string language, [FromBody] Language newLanguage)
@@ -914,10 +1008,11 @@ namespace ResumeApi.Controllers
                 return NotFound("language not found");
 
             ResumeRepository.Resumes[resumeIndex].languages[languageIndex] = newLanguage;
-
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
             return NoContent();
         }
 
+        [ETagFilter]
         [BasicAuthentication]
         [HttpPut("{name}/interests/{interestName}")]
         public ActionResult PutInterest(string name, string interestName, [FromBody] Interest newInteres)
@@ -934,10 +1029,11 @@ namespace ResumeApi.Controllers
                 return NotFound("interes not found");
 
             ResumeRepository.Resumes[resumeIndex].interests[interesIndex] = newInteres;
-
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
             return NoContent();
         }
 
+        [ETagFilter]
         [BasicAuthentication]
         [HttpPut("{name}/references/{referenceName}")]
         public ActionResult PutReference(string name, string referenceName, [FromBody] Reference newReference)
@@ -954,7 +1050,7 @@ namespace ResumeApi.Controllers
                 return NotFound("interes not found");
 
             ResumeRepository.Resumes[resumeIndex].references[referenceIndex] = newReference;
-
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
             return NoContent();
         }
     }
