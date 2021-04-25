@@ -376,7 +376,8 @@ namespace ResumeApi.Controllers
 
 
         #region POST
-        // POST: ResumeContoller
+
+        [BasicAuthentication]
         [HttpPost]
         public ActionResult post([FromBody] Resume newResume)
         {
@@ -388,6 +389,7 @@ namespace ResumeApi.Controllers
             return StatusCode((int)HttpStatusCode.NoContent);
         }
 
+        [BasicAuthentication]
         [HttpPost("{name}/basics/profiles")]
         public ActionResult postProfiel(string name, [FromBody] Profile newProfile)
         {
@@ -400,6 +402,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpPost("{name}/work")]
         public ActionResult postwork(string name, [FromBody] Work newWork)
         {
@@ -412,6 +415,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpPost("{name}/volunteer")]
         public ActionResult postVolunteer(string name, [FromBody] Volunteer newVolunteer)
         {
@@ -437,6 +441,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpPost("{name}/awards")]
         public ActionResult postAward(string name, [FromBody] Award newAward)
         {
@@ -461,7 +466,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
-
+        [BasicAuthentication]
         [HttpPost("{name}/skills")]
         public ActionResult postSkills(string name, [FromBody] Skill newSkill)
         {
@@ -474,6 +479,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpPost("{name}/languages")]
         public ActionResult postLanguages(string name, [FromBody] Language newLanguage)
         {
@@ -498,6 +504,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpPost("{name}/references")]
         public ActionResult postReferences(string name, [FromBody] Reference newReference)
         {
@@ -515,7 +522,8 @@ namespace ResumeApi.Controllers
 
 
         #region DELETE
-        // DELETE: ResumeContoller
+
+        [BasicAuthentication]
         [HttpDelete("{name}")]
         public ActionResult delete(string name)
         {
@@ -530,6 +538,7 @@ namespace ResumeApi.Controllers
             return StatusCode((int)HttpStatusCode.NoContent);
         }
 
+        [BasicAuthentication]
         [HttpDelete("{name}/basics/profiles/{network}")]
         public ActionResult DeleteProfiles(string name, string network)
         {
@@ -549,6 +558,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpDelete("{name}/work/{company}")]
         public ActionResult<Work> DeleteWork(string name, string company)
         {
@@ -568,6 +578,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpDelete("{name}/volunteer/{organization}")]
         public ActionResult<Volunteer> DeleteVolunteer(string name, string organization)
         {
@@ -587,6 +598,7 @@ namespace ResumeApi.Controllers
 
         }
 
+        [BasicAuthentication]
         [HttpDelete("{name}/education/{institution}")]
         public ActionResult<Education> DeleteEducation(string name, string institution)
         {
@@ -604,6 +616,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpDelete("{name}/awards/{title}")]
         public ActionResult<Award> DeleteAward(string name, string title)
         {
@@ -621,6 +634,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpDelete("{name}/publications/{publicationName}")]
         public ActionResult<Publication> DeletePublication(string name, string publicationName)
         {
@@ -638,6 +652,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpDelete("{name}/skills/{skillName}")]
         public ActionResult<Skill> DeleteSkill(string name, string skillName)
         {
@@ -655,6 +670,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpDelete("{name}/languages/{languageName}")]
         public ActionResult<Language> DeleteLanguage(string name, string languageName)
         {
@@ -672,6 +688,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpDelete("{name}/references/{referenceName}")]
         public ActionResult<Reference> DeleteReference(string name, string referenceName)
         {
@@ -692,6 +709,10 @@ namespace ResumeApi.Controllers
 
         #endregion
 
+
+        #region PUT
+
+        [BasicAuthentication]
         [HttpPut("{name}")]
         public ActionResult put(string name, [FromBody] Resume newResume)
         {
@@ -706,6 +727,7 @@ namespace ResumeApi.Controllers
             return StatusCode((int)HttpStatusCode.NoContent);
         }
 
+        [BasicAuthentication]
         [HttpPut("{name}/basics")]
         public ActionResult PutBasic(string name, [FromBody] Basics newBasic)
         {
@@ -721,6 +743,7 @@ namespace ResumeApi.Controllers
 
         }
 
+        [BasicAuthentication]
         [HttpPut("{name}/basics/location")]
         public ActionResult PutLocation(string name, [FromBody] Location newLocation)
         {
@@ -735,6 +758,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpPut("{name}/basics/profiles/{network}")]
         public ActionResult PutLocation(string name, string network, [FromBody] Profile newProfile)
         {
@@ -754,6 +778,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpPut("{name}/work/{company}")]
         public ActionResult PutWork(string name, string company, [FromBody] Work newWork)
         {
@@ -773,6 +798,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpPut("{name}/volunteer/{organization}")]
         public ActionResult PutVolunteer(string name, string organization, [FromBody] Volunteer newVolunteer)
         {
@@ -792,6 +818,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpPut("{name}/education/{institution}")]
         public ActionResult PutEducation(string name, string institution, [FromBody] Education newEducation)
         {
@@ -811,6 +838,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpPut("{name}/awards/{title}")]
         public ActionResult PutAwards(string name, string title, [FromBody] Award newAward)
         {
@@ -830,6 +858,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpPut("{name}/publications/{publicationName}")]
         public ActionResult PutPublications(string name, string publicationName, [FromBody] Publication newPublication)
         {
@@ -849,6 +878,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpPut("{name}/skills/{skillName}")]
         public ActionResult PutSkill(string name, string skillName, [FromBody] Skill newSkill)
         {
@@ -868,6 +898,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpPut("{name}/languages/{language}")]
         public ActionResult PutSkill(string name, string language, [FromBody] Language newLanguage)
         {
@@ -887,6 +918,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpPut("{name}/interests/{interestName}")]
         public ActionResult PutInterest(string name, string interestName, [FromBody] Interest newInteres)
         {
@@ -906,6 +938,7 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
+        [BasicAuthentication]
         [HttpPut("{name}/references/{referenceName}")]
         public ActionResult PutReference(string name, string referenceName, [FromBody] Reference newReference)
         {
@@ -925,4 +958,5 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
     }
+    #endregion
 }
