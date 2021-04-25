@@ -25,7 +25,7 @@ namespace ResumeApi.Controllers
             return ResumeRepository.Resumes.FindIndex(resume => resume.basics.name == name);
         }
 
-
+        #region GET
         // GET: ResumeContoller
         [HttpGet]
         public ActionResult<List<Resume>> Get()
@@ -245,7 +245,7 @@ namespace ResumeApi.Controllers
             if (resume == null)
                 return NotFound("resume not found");
 
-            Publication publication = resume.publications.FirstOrDefault(publication => publication.name == name);
+            Publication publication = resume.publications.FirstOrDefault(publication => publication.name == publicationName);
             if (publication == null)
                 return NotFound("publication not found");
 
@@ -275,7 +275,7 @@ namespace ResumeApi.Controllers
             if (resume == null)
                 return NotFound("resume not found");
 
-            Skill skill = resume.skills.FirstOrDefault(skill => skill.name == name);
+            Skill skill = resume.skills.FirstOrDefault(skill => skill.name == skillName);
             if (skill == null)
                 return NotFound("skill not found");
 
@@ -372,17 +372,101 @@ namespace ResumeApi.Controllers
             return Ok(reference);
         }
 
+        #endregion
 
 
-
+        #region POST
         // POST: ResumeContoller
         [HttpPost]
         public ActionResult post([FromBody] Resume newResume)
         {
             ResumeRepository.Resumes.Add(newResume);
-
             return StatusCode((int)HttpStatusCode.NoContent);
         }
+
+        [HttpPost("{name}/basics/profiles")]
+        public ActionResult postProfiel(string name, [FromBody] Profile newProfile)
+        {
+            Resume resume = GetResumeByName(name);
+            resume.basics.profiles.Add(newProfile);
+            return NoContent();
+        }
+
+        [HttpPost("{name}/work")]
+        public ActionResult postwork(string name, [FromBody] Work newWork)
+        {
+            Resume resume = GetResumeByName(name);
+            resume.work.Add(newWork);
+            return NoContent();
+        }
+
+        [HttpPost("{name}/volunteer")]
+        public ActionResult postVolunteer(string name, [FromBody] Volunteer newVolunteer)
+        {
+            Resume resume = GetResumeByName(name);
+            resume.volunteer.Add(newVolunteer);
+            return NoContent();
+        }
+
+        [HttpPost("{name}/education")]
+        public ActionResult postEducation(string name, [FromBody] Education newEducation)
+        {
+            Resume resume = GetResumeByName(name);
+            resume.education.Add(newEducation);
+            return NoContent();
+        }
+
+        [HttpPost("{name}/awards")]
+        public ActionResult postAward(string name, [FromBody] Award newAward)
+        {
+            Resume resume = GetResumeByName(name);
+            resume.awards.Add(newAward);
+            return NoContent();
+        }
+
+        [HttpPost("{name}/publications")]
+        public ActionResult postPublications(string name, [FromBody] Publication newPublication)
+        {
+            Resume resume = GetResumeByName(name);
+            resume.publications.Add(newPublication);
+            return NoContent();
+        }
+
+
+        [HttpPost("{name}/skills")]
+        public ActionResult postSkills(string name, [FromBody] Skill newSkill)
+        {
+            Resume resume = GetResumeByName(name);
+            resume.skills.Add(newSkill);
+            return NoContent();
+        }
+
+        [HttpPost("{name}/languages")]
+        public ActionResult postLanguages(string name, [FromBody] Language newLanguage)
+        {
+            Resume resume = GetResumeByName(name);
+            resume.languages.Add(newLanguage);
+            return NoContent();
+        }
+
+        [HttpPost("{name}/interests")]
+        public ActionResult postInterests(string name, [FromBody] Interest newInterest)
+        {
+            Resume resume = GetResumeByName(name);
+            resume.interests.Add(newInterest);
+            return NoContent();
+        }
+
+        [HttpPost("{name}/references")]
+        public ActionResult postReferences(string name, [FromBody] Reference newReference)
+        {
+            Resume resume = GetResumeByName(name);
+            resume.references.Add(newReference);
+            return NoContent();
+        }
+
+
+        #endregion
 
         // DELETE: ResumeContoller
         [HttpDelete("{name}")]
