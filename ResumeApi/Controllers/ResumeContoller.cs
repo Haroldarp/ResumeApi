@@ -513,6 +513,8 @@ namespace ResumeApi.Controllers
 
         #endregion
 
+
+        #region DELETE
         // DELETE: ResumeContoller
         [HttpDelete("{name}")]
         public ActionResult delete(string name)
@@ -527,6 +529,168 @@ namespace ResumeApi.Controllers
 
             return StatusCode((int)HttpStatusCode.NoContent);
         }
+
+        [HttpDelete("{name}/basics/profiles/{network}")]
+        public ActionResult DeleteProfiles(string name, string network)
+        {
+
+            Resume resume = GetResumeByName(name);
+
+            if (resume == null)
+                return NotFound("resume not found");
+
+            Profile profile = resume.basics.profiles.FirstOrDefault(profile => profile.network == network);
+
+            if (profile == null)
+                return NotFound("profile not found");
+
+            resume.basics.profiles.Remove(profile);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{name}/work/{company}")]
+        public ActionResult<Work> DeleteWork(string name, string company)
+        {
+
+            Resume resume = GetResumeByName(name);
+
+            if (resume == null)
+                return NotFound("resume not found");
+
+            Work work = resume.work.FirstOrDefault(work => work.company == company);
+
+            if (work == null)
+                return NotFound("work not found");
+
+            resume.work.Remove(work);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{name}/volunteer/{organization}")]
+        public ActionResult<Volunteer> DeleteVolunteer(string name, string organization)
+        {
+
+            Resume resume = GetResumeByName(name);
+
+            if (resume == null)
+                return NotFound("resume not found");
+
+            Volunteer volunteer = resume.volunteer.FirstOrDefault(volunteer => volunteer.organization == organization);
+
+            if (volunteer == null)
+                return NotFound("volunteer not found");
+
+            resume.volunteer.Remove(volunteer);
+            return NoContent();
+
+        }
+
+        [HttpDelete("{name}/education/{institution}")]
+        public ActionResult<Education> DeleteEducation(string name, string institution)
+        {
+
+            Resume resume = GetResumeByName(name);
+
+            if (resume == null)
+                return NotFound("resume not found");
+
+            Education education = resume.education.FirstOrDefault(education => education.institution == institution);
+            if (education == null)
+                return NotFound("education not found");
+
+            resume.education.Remove(education);
+            return NoContent();
+        }
+
+        [HttpDelete("{name}/awards/{title}")]
+        public ActionResult<Award> DeleteAward(string name, string title)
+        {
+
+            Resume resume = GetResumeByName(name);
+
+            if (resume == null)
+                return NotFound("resume not found");
+
+            Award award = resume.awards.FirstOrDefault(award => award.title == title);
+            if (award == null)
+                return NotFound("award not found");
+
+            resume.awards.Remove(award);
+            return NoContent();
+        }
+
+        [HttpDelete("{name}/publications/{publicationName}")]
+        public ActionResult<Publication> DeletePublication(string name, string publicationName)
+        {
+
+            Resume resume = GetResumeByName(name);
+
+            if (resume == null)
+                return NotFound("resume not found");
+
+            Publication publication = resume.publications.FirstOrDefault(publication => publication.name == publicationName);
+            if (publication == null)
+                return NotFound("publication not found");
+
+            resume.publications.Remove(publication);
+            return NoContent();
+        }
+
+        [HttpDelete("{name}/skills/{skillName}")]
+        public ActionResult<Skill> DeleteSkill(string name, string skillName)
+        {
+
+            Resume resume = GetResumeByName(name);
+
+            if (resume == null)
+                return NotFound("resume not found");
+
+            Skill skill = resume.skills.FirstOrDefault(skill => skill.name == skillName);
+            if (skill == null)
+                return NotFound("skill not found");
+
+            resume.skills.Remove(skill);
+            return NoContent();
+        }
+
+        [HttpGet("{name}/languages/{languageName}")]
+        public ActionResult<Language> GetLanguage(string name, string languageName)
+        {
+
+            Resume resume = GetResumeByName(name);
+
+            if (resume == null)
+                return NotFound("resume not found");
+
+            Language language = resume.languages.FirstOrDefault(item => item.language == languageName);
+            if (language == null)
+                return NotFound("language not found");
+
+            resume.languages.Remove(language);
+            return NoContent();
+        }
+
+        [HttpGet("{name}/references/{referenceName}")]
+        public ActionResult<Reference> GetReference(string name, string referenceName)
+        {
+
+            Resume resume = GetResumeByName(name);
+
+            if (resume == null)
+                return NotFound("resume not found");
+
+            Reference reference = resume.references.FirstOrDefault(reference => reference.name == referenceName);
+            if (reference == null)
+                return NotFound("reference not found");
+
+            resume.references.Remove(reference);
+            return NoContent();
+        }
+
+
+        #endregion
 
         [HttpPut("{name}")]
         public ActionResult put(string name, [FromBody] Resume newResume)
