@@ -8,15 +8,15 @@ namespace ResumeApi.Models
     public class Resume
     {
         public Basics basics { get; set; }
-        public IList<Work> work { get; set; }
-        public IList<Volunteer> volunteer { get; set; }
-        public IList<Education> education { get; set; }
-        public IList<Award> awards { get; set; }
-        public IList<Publication> publications { get; set; }
-        public IList<Skill> skills { get; set; }
-        public IList<Language> languages { get; set; }
-        public IList<Interest> interests { get; set; }
-        public IList<Reference> references { get; set; }
+        public List<Work> work { get; set; }
+        public List<Volunteer> volunteer { get; set; }
+        public List<Education> education { get; set; }
+        public List<Award> awards { get; set; }
+        public List<Publication> publications { get; set; }
+        public List<Skill> skills { get; set; }
+        public List<Language> languages { get; set; }
+        public List<Interest> interests { get; set; }
+        public List<Reference> references { get; set; }
     }
 
     public class Location
@@ -45,7 +45,7 @@ namespace ResumeApi.Models
         public string website { get; set; }
         public string summary { get; set; }
         public Location location { get; set; }
-        public IList<Profile> profiles { get; set; }
+        public List<Profile> profiles { get; set; }
     }
 
     public class Work
@@ -56,7 +56,7 @@ namespace ResumeApi.Models
         public string startDate { get; set; }
         public string endDate { get; set; }
         public string summary { get; set; }
-        public IList<string> highlights { get; set; }
+        public List<string> highlights { get; set; }
     }
 
     public class Volunteer
@@ -67,7 +67,7 @@ namespace ResumeApi.Models
         public string startDate { get; set; }
         public string endDate { get; set; }
         public string summary { get; set; }
-        public IList<string> highlights { get; set; }
+        public List<string> highlights { get; set; }
     }
 
     public class Education
@@ -78,7 +78,7 @@ namespace ResumeApi.Models
         public string startDate { get; set; }
         public string endDate { get; set; }
         public string gpa { get; set; }
-        public IList<string> courses { get; set; }
+        public List<string> courses { get; set; }
     }
 
     public class Award
@@ -102,7 +102,7 @@ namespace ResumeApi.Models
     {
         public string name { get; set; }
         public string level { get; set; }
-        public IList<string> keywords { get; set; }
+        public List<string> keywords { get; set; }
     }
 
     public class Language
@@ -114,7 +114,7 @@ namespace ResumeApi.Models
     public class Interest
     {
         public string name { get; set; }
-        public IList<string> keywords { get; set; }
+        public List<string> keywords { get; set; }
     }
 
     public class Reference
