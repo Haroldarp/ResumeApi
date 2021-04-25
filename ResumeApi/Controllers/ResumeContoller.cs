@@ -655,8 +655,8 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
-        [HttpGet("{name}/languages/{languageName}")]
-        public ActionResult<Language> GetLanguage(string name, string languageName)
+        [HttpDelete("{name}/languages/{languageName}")]
+        public ActionResult<Language> DeleteLanguage(string name, string languageName)
         {
 
             Resume resume = GetResumeByName(name);
@@ -672,8 +672,8 @@ namespace ResumeApi.Controllers
             return NoContent();
         }
 
-        [HttpGet("{name}/references/{referenceName}")]
-        public ActionResult<Reference> GetReference(string name, string referenceName)
+        [HttpDelete("{name}/references/{referenceName}")]
+        public ActionResult<Reference> DeleteReference(string name, string referenceName)
         {
 
             Resume resume = GetResumeByName(name);
@@ -704,6 +704,225 @@ namespace ResumeApi.Controllers
             ResumeRepository.Resumes[resumeIndex] = newResume;
 
             return StatusCode((int)HttpStatusCode.NoContent);
+        }
+
+        [HttpPut("{name}/basics")]
+        public ActionResult PutBasic(string name, [FromBody] Basics newBasic)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            ResumeRepository.Resumes[resumeIndex].basics = newBasic;
+
+            return NoContent();
+
+        }
+
+        [HttpPut("{name}/basics/location")]
+        public ActionResult PutLocation(string name, [FromBody] Location newLocation)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            ResumeRepository.Resumes[resumeIndex].basics.location = newLocation;
+
+            return NoContent();
+        }
+
+        [HttpPut("{name}/basics/profiles/{network}")]
+        public ActionResult PutLocation(string name, string network, [FromBody] Profile newProfile)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int profileIndex = ResumeRepository.Resumes[resumeIndex].basics.profiles.FindIndex(profile => profile.network == network);
+
+            if (profileIndex == -1)
+                return NotFound("profile not found");
+
+            ResumeRepository.Resumes[resumeIndex].basics.profiles[profileIndex] = newProfile;
+
+            return NoContent();
+        }
+
+        [HttpPut("{name}/work/{company}")]
+        public ActionResult PutWork(string name, string company, [FromBody] Work newWork)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int workIndex = ResumeRepository.Resumes[resumeIndex].work.FindIndex(work => work.company == company);
+
+            if (workIndex == -1)
+                return NotFound("work not found");
+
+            ResumeRepository.Resumes[resumeIndex].work[workIndex] = newWork;
+
+            return NoContent();
+        }
+
+        [HttpPut("{name}/volunteer/{organization}")]
+        public ActionResult PutVolunteer(string name, string organization, [FromBody] Volunteer newVolunteer)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int volunteerIndex = ResumeRepository.Resumes[resumeIndex].volunteer.FindIndex(volunteer => volunteer.organization == organization);
+
+            if (volunteerIndex == -1)
+                return NotFound("volunteer not found");
+
+            ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex] = newVolunteer;
+
+            return NoContent();
+        }
+
+        [HttpPut("{name}/education/{institution}")]
+        public ActionResult PutEducation(string name, string institution, [FromBody] Education newEducation)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int educationIndex = ResumeRepository.Resumes[resumeIndex].education.FindIndex(education => education.institution == institution);
+
+            if (educationIndex == -1)
+                return NotFound("education not found");
+
+            ResumeRepository.Resumes[resumeIndex].education[educationIndex] = newEducation;
+
+            return NoContent();
+        }
+
+        [HttpPut("{name}/awards/{title}")]
+        public ActionResult PutAwards(string name, string title, [FromBody] Award newAward)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int awardIndex = ResumeRepository.Resumes[resumeIndex].awards.FindIndex(award => award.title == title);
+
+            if (awardIndex == -1)
+                return NotFound("award not found");
+
+            ResumeRepository.Resumes[resumeIndex].awards[awardIndex] = newAward;
+
+            return NoContent();
+        }
+
+        [HttpPut("{name}/publications/{publicationName}")]
+        public ActionResult PutPublications(string name, string publicationName, [FromBody] Publication newPublication)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int publicationIndex = ResumeRepository.Resumes[resumeIndex].publications.FindIndex(publication => publication.name == publicationName);
+
+            if (publicationIndex == -1)
+                return NotFound("publication not found");
+
+            ResumeRepository.Resumes[resumeIndex].publications[publicationIndex] = newPublication;
+
+            return NoContent();
+        }
+
+        [HttpPut("{name}/skills/{skillName}")]
+        public ActionResult PutSkill(string name, string skillName, [FromBody] Skill newSkill)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int skillIndex = ResumeRepository.Resumes[resumeIndex].skills.FindIndex(skill => skill.name == skillName);
+
+            if (skillIndex == -1)
+                return NotFound("skill not found");
+
+            ResumeRepository.Resumes[resumeIndex].skills[skillIndex] = newSkill;
+
+            return NoContent();
+        }
+
+        [HttpPut("{name}/languages/{language}")]
+        public ActionResult PutSkill(string name, string language, [FromBody] Language newLanguage)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int languageIndex = ResumeRepository.Resumes[resumeIndex].languages.FindIndex(item => item.language == language);
+
+            if (languageIndex == -1)
+                return NotFound("language not found");
+
+            ResumeRepository.Resumes[resumeIndex].languages[languageIndex] = newLanguage;
+
+            return NoContent();
+        }
+
+        [HttpPut("{name}/interests/{interestName}")]
+        public ActionResult PutInterest(string name, string interestName, [FromBody] Interest newInteres)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int interesIndex = ResumeRepository.Resumes[resumeIndex].interests.FindIndex(interest => interest.name == interestName);
+
+            if (interesIndex == -1)
+                return NotFound("interes not found");
+
+            ResumeRepository.Resumes[resumeIndex].interests[interesIndex] = newInteres;
+
+            return NoContent();
+        }
+
+        [HttpPut("{name}/references/{referenceName}")]
+        public ActionResult PutReference(string name, string referenceName, [FromBody] Reference newReference)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int referenceIndex = ResumeRepository.Resumes[resumeIndex].references.FindIndex(reference => reference.name == referenceName);
+
+            if (referenceIndex == -1)
+                return NotFound("interes not found");
+
+            ResumeRepository.Resumes[resumeIndex].references[referenceIndex] = newReference;
+
+            return NoContent();
         }
     }
 }
