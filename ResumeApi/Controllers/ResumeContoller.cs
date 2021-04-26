@@ -47,7 +47,6 @@ namespace ResumeApi.Controllers
             if(ResumeRepository.etags.ContainsKey(resume.basics.name.Replace(" ", String.Empty)))
             {
                 ResumeRepository.etags[resume.basics.name.Replace(" ", String.Empty)] = etag;
-
             }
             else
             {
@@ -75,7 +74,6 @@ namespace ResumeApi.Controllers
         public ActionResult<Resume> GetByName(string name)
         {
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -88,7 +86,6 @@ namespace ResumeApi.Controllers
         public ActionResult<Basics> GetBasics(string name)
         {
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -102,7 +99,6 @@ namespace ResumeApi.Controllers
         public ActionResult<Location> GetLocation(string name)
         {
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -116,7 +112,6 @@ namespace ResumeApi.Controllers
         public ActionResult<List<Profile>> GetProfiles(string name)
         {
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -129,14 +124,11 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/basics/profile/{network}")]
         public ActionResult<Profile> GetProfile(string name, string network)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
             Profile profile = resume.basics.profiles.FirstOrDefault(profile => profile.network == network);
-
             if (profile == null)
                 return NotFound("profile not found");
 
@@ -148,14 +140,11 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/work")]
         public ActionResult<List<Work>> GetWork(string name)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
             List<Work> works = resume.work;
-
             return Ok(works);
         }
 
@@ -164,18 +153,14 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/work/{company}")]
         public ActionResult<Work> GetWork(string name, string company)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
             Work work = resume.work.FirstOrDefault(work => work.company == company);
-
             if(work == null)
                 return NotFound("work not found");
-
-
+           
             return Ok(work);
         }
 
@@ -184,14 +169,11 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/volunteer")]
         public ActionResult<List<Volunteer>> GetVolunteer(string name)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
             List<Volunteer> volunteer = resume.volunteer;
-
             return Ok(volunteer);
         }
 
@@ -200,14 +182,11 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/volunteer/{organization}")]
         public ActionResult<Volunteer> GetVolunteer(string name, string organization)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
             Volunteer volunteer = resume.volunteer.FirstOrDefault(volunteer => volunteer.organization == organization);
-
             if (volunteer == null)
                 return NotFound("volunteer not found");
 
@@ -219,14 +198,11 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/education")]
         public ActionResult<List<Education>> GetEducation(string name)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
             List<Education> education = resume.education;
-
             return Ok(education);
         }
 
@@ -235,9 +211,7 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/education/{institution}")]
         public ActionResult<Education> GetEducation(string name, string institution)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -253,14 +227,12 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/awards")]
         public ActionResult<List<Award>> GetAward(string name)
         {
-
             Resume resume = GetResumeByName(name);
 
             if (resume == null)
                 return NotFound("resume not found");
 
             List<Award> award = resume.awards;
-
             return Ok(award);
         }
 
@@ -269,9 +241,7 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/awards/{title}")]
         public ActionResult<Award> GetAward(string name, string title)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -287,14 +257,11 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/publications")]
         public ActionResult<List<Publication>> GetPublication(string name)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
             List<Publication> publications = resume.publications;
-
             return Ok(publications);
         }
 
@@ -303,9 +270,7 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/publications/{publicationName}")]
         public ActionResult<Publication> GetPublication(string name, string publicationName)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -321,14 +286,11 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/skills")]
         public ActionResult<List<Skill>> GetSkill(string name)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
             List<Skill> skills = resume.skills;
-
             return Ok(skills);
         }
 
@@ -337,9 +299,7 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/skills/{skillName}")]
         public ActionResult<Skill> GetSkill(string name, string skillName)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -355,14 +315,11 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/languages")]
         public ActionResult<List<Language>> GetLanguage(string name)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
             List<Language> languages = resume.languages;
-
             return Ok(languages);
         }
 
@@ -371,9 +328,7 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/languages/{languageName}")]
         public ActionResult<Language> GetLanguage(string name, string languageName)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -389,14 +344,11 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/interests")]
         public ActionResult<List<Interest>> GetInterest(string name)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
             List<Interest> interests = resume.interests;
-
             return Ok(interests);
         }
 
@@ -405,9 +357,7 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/interests/{interestName}")]
         public ActionResult<Interest> GetInterest(string name, string interestName)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -423,14 +373,11 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/references")]
         public ActionResult<List<Reference>> GetReference(string name)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
             List<Reference> references = resume.references;
-
             return Ok(references);
         }
 
@@ -439,9 +386,7 @@ namespace ResumeApi.Controllers
         [HttpHead("{name}/references/{referenceName}")]
         public ActionResult<Reference> GetReference(string name, string referenceName)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -465,7 +410,6 @@ namespace ResumeApi.Controllers
                 return Conflict("Already exist");
 
             ResumeRepository.Resumes.Add(newResume);
-
             SetEtag(newResume);
             return StatusCode((int)HttpStatusCode.NoContent);
         }
@@ -489,7 +433,6 @@ namespace ResumeApi.Controllers
         public ActionResult postwork(string name, [FromBody] Work newWork)
         {
             Resume resume = GetResumeByName(name);
-
             if (resume.work.FirstOrDefault(item => item.company == newWork.company) != null)
                 return Conflict("Already exist");
 
@@ -503,7 +446,6 @@ namespace ResumeApi.Controllers
         public ActionResult postVolunteer(string name, [FromBody] Volunteer newVolunteer)
         {
             Resume resume = GetResumeByName(name);
-
             if (resume.volunteer.FirstOrDefault(item => item.organization == newVolunteer.organization) != null)
                 return Conflict("Already exist");
 
@@ -516,8 +458,6 @@ namespace ResumeApi.Controllers
         public ActionResult postEducation(string name, [FromBody] Education newEducation)
         {
             Resume resume = GetResumeByName(name);
-
-
             if (resume.education.FirstOrDefault(item => item.institution == newEducation.institution) != null)
                 return Conflict("Already exist");
 
@@ -531,7 +471,6 @@ namespace ResumeApi.Controllers
         public ActionResult postAward(string name, [FromBody] Award newAward)
         {
             Resume resume = GetResumeByName(name);
-
             if (resume.awards.FirstOrDefault(item => item.title == newAward.title) != null)
                 return  Conflict("Already exist");
 
@@ -544,7 +483,6 @@ namespace ResumeApi.Controllers
         public ActionResult postPublications(string name, [FromBody] Publication newPublication)
         {
             Resume resume = GetResumeByName(name);
-
             if (resume.publications.FirstOrDefault(item => item.name == newPublication.name) != null)
                 return Conflict("Already exist");
 
@@ -558,7 +496,6 @@ namespace ResumeApi.Controllers
         public ActionResult postSkills(string name, [FromBody] Skill newSkill)
         {
             Resume resume = GetResumeByName(name);
-
             if (resume.skills.FirstOrDefault(item => item.name == newSkill.name) != null)
                 return Conflict("Already exist");
 
@@ -572,7 +509,6 @@ namespace ResumeApi.Controllers
         public ActionResult postLanguages(string name, [FromBody] Language newLanguage)
         {
             Resume resume = GetResumeByName(name);
-
             if (resume.languages.FirstOrDefault(item => item.language == newLanguage.language) != null)
                 return Conflict("Already exist");
 
@@ -585,7 +521,6 @@ namespace ResumeApi.Controllers
         public ActionResult postInterests(string name, [FromBody] Interest newInterest)
         {
             Resume resume = GetResumeByName(name);
-
             if (resume.interests.FirstOrDefault(item => item.name == newInterest.name) != null)
                 return Conflict("Already exist");
 
@@ -599,7 +534,6 @@ namespace ResumeApi.Controllers
         public ActionResult postReferences(string name, [FromBody] Reference newReference)
         {
             Resume resume = GetResumeByName(name);
-
             if (resume.references.FirstOrDefault(item => item.name == newReference.name) != null)
                 return Conflict("Already exist");
 
@@ -618,9 +552,7 @@ namespace ResumeApi.Controllers
         [HttpDelete("{name}")]
         public ActionResult delete(string name)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -628,7 +560,6 @@ namespace ResumeApi.Controllers
             ResumeRepository.etags.Remove(resume.basics.name.Replace(" ", String.Empty));
             string etagAll = GenerateEtag(JsonConvert.SerializeObject(ResumeRepository.Resumes));
             ResumeRepository.etag = etagAll;
-
             return StatusCode((int)HttpStatusCode.NoContent);
         }
 
@@ -636,14 +567,11 @@ namespace ResumeApi.Controllers
         [HttpDelete("{name}/basics/profiles/{network}")]
         public ActionResult DeleteProfiles(string name, string network)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
             Profile profile = resume.basics.profiles.FirstOrDefault(profile => profile.network == network);
-
             if (profile == null)
                 return NotFound("profile not found");
 
@@ -656,14 +584,11 @@ namespace ResumeApi.Controllers
         [HttpDelete("{name}/work/{company}")]
         public ActionResult<Work> DeleteWork(string name, string company)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
             Work work = resume.work.FirstOrDefault(work => work.company == company);
-
             if (work == null)
                 return NotFound("work not found");
 
@@ -676,14 +601,11 @@ namespace ResumeApi.Controllers
         [HttpDelete("{name}/volunteer/{organization}")]
         public ActionResult<Volunteer> DeleteVolunteer(string name, string organization)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
             Volunteer volunteer = resume.volunteer.FirstOrDefault(volunteer => volunteer.organization == organization);
-
             if (volunteer == null)
                 return NotFound("volunteer not found");
 
@@ -697,9 +619,7 @@ namespace ResumeApi.Controllers
         [HttpDelete("{name}/education/{institution}")]
         public ActionResult<Education> DeleteEducation(string name, string institution)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -716,9 +636,7 @@ namespace ResumeApi.Controllers
         [HttpDelete("{name}/awards/{title}")]
         public ActionResult<Award> DeleteAward(string name, string title)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -735,9 +653,7 @@ namespace ResumeApi.Controllers
         [HttpDelete("{name}/publications/{publicationName}")]
         public ActionResult<Publication> DeletePublication(string name, string publicationName)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -754,9 +670,7 @@ namespace ResumeApi.Controllers
         [HttpDelete("{name}/skills/{skillName}")]
         public ActionResult<Skill> DeleteSkill(string name, string skillName)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -773,9 +687,7 @@ namespace ResumeApi.Controllers
         [HttpDelete("{name}/languages/{languageName}")]
         public ActionResult<Language> DeleteLanguage(string name, string languageName)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -792,9 +704,7 @@ namespace ResumeApi.Controllers
         [HttpDelete("{name}/references/{referenceName}")]
         public ActionResult<Reference> DeleteReference(string name, string referenceName)
         {
-
             Resume resume = GetResumeByName(name);
-
             if (resume == null)
                 return NotFound("resume not found");
 
@@ -818,10 +728,7 @@ namespace ResumeApi.Controllers
         [HttpPut("{name}")]
         public ActionResult put(string name, [FromBody] Resume newResume)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
@@ -840,9 +747,7 @@ namespace ResumeApi.Controllers
         [HttpPut("{name}/basics")]
         public ActionResult PutBasic(string name, [FromBody] Basics newBasic)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
@@ -857,9 +762,7 @@ namespace ResumeApi.Controllers
         [HttpPut("{name}/basics/location")]
         public ActionResult PutLocation(string name, [FromBody] Location newLocation)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
@@ -873,14 +776,11 @@ namespace ResumeApi.Controllers
         [HttpPut("{name}/basics/profiles/{network}")]
         public ActionResult PutLocation(string name, string network, [FromBody] Profile newProfile)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int profileIndex = ResumeRepository.Resumes[resumeIndex].basics.profiles.FindIndex(profile => profile.network == network);
-
             if (profileIndex == -1)
                 return NotFound("profile not found");
 
@@ -894,14 +794,11 @@ namespace ResumeApi.Controllers
         [HttpPut("{name}/work/{company}")]
         public ActionResult PutWork(string name, string company, [FromBody] Work newWork)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int workIndex = ResumeRepository.Resumes[resumeIndex].work.FindIndex(work => work.company == company);
-
             if (workIndex == -1)
                 return NotFound("work not found");
 
@@ -915,14 +812,11 @@ namespace ResumeApi.Controllers
         [HttpPut("{name}/volunteer/{organization}")]
         public ActionResult PutVolunteer(string name, string organization, [FromBody] Volunteer newVolunteer)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int volunteerIndex = ResumeRepository.Resumes[resumeIndex].volunteer.FindIndex(volunteer => volunteer.organization == organization);
-
             if (volunteerIndex == -1)
                 return NotFound("volunteer not found");
 
@@ -936,14 +830,11 @@ namespace ResumeApi.Controllers
         [HttpPut("{name}/education/{institution}")]
         public ActionResult PutEducation(string name, string institution, [FromBody] Education newEducation)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int educationIndex = ResumeRepository.Resumes[resumeIndex].education.FindIndex(education => education.institution == institution);
-
             if (educationIndex == -1)
                 return NotFound("education not found");
 
@@ -957,14 +848,11 @@ namespace ResumeApi.Controllers
         [HttpPut("{name}/awards/{title}")]
         public ActionResult PutAwards(string name, string title, [FromBody] Award newAward)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int awardIndex = ResumeRepository.Resumes[resumeIndex].awards.FindIndex(award => award.title == title);
-
             if (awardIndex == -1)
                 return NotFound("award not found");
 
@@ -978,14 +866,11 @@ namespace ResumeApi.Controllers
         [HttpPut("{name}/publications/{publicationName}")]
         public ActionResult PutPublications(string name, string publicationName, [FromBody] Publication newPublication)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int publicationIndex = ResumeRepository.Resumes[resumeIndex].publications.FindIndex(publication => publication.name == publicationName);
-
             if (publicationIndex == -1)
                 return NotFound("publication not found");
 
@@ -999,14 +884,11 @@ namespace ResumeApi.Controllers
         [HttpPut("{name}/skills/{skillName}")]
         public ActionResult PutSkill(string name, string skillName, [FromBody] Skill newSkill)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int skillIndex = ResumeRepository.Resumes[resumeIndex].skills.FindIndex(skill => skill.name == skillName);
-
             if (skillIndex == -1)
                 return NotFound("skill not found");
 
@@ -1020,14 +902,11 @@ namespace ResumeApi.Controllers
         [HttpPut("{name}/languages/{language}")]
         public ActionResult PutSkill(string name, string language, [FromBody] Language newLanguage)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int languageIndex = ResumeRepository.Resumes[resumeIndex].languages.FindIndex(item => item.language == language);
-
             if (languageIndex == -1)
                 return NotFound("language not found");
 
@@ -1041,14 +920,11 @@ namespace ResumeApi.Controllers
         [HttpPut("{name}/interests/{interestName}")]
         public ActionResult PutInterest(string name, string interestName, [FromBody] Interest newInteres)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int interesIndex = ResumeRepository.Resumes[resumeIndex].interests.FindIndex(interest => interest.name == interestName);
-
             if (interesIndex == -1)
                 return NotFound("interes not found");
 
@@ -1062,14 +938,11 @@ namespace ResumeApi.Controllers
         [HttpPut("{name}/references/{referenceName}")]
         public ActionResult PutReference(string name, string referenceName, [FromBody] Reference newReference)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int referenceIndex = ResumeRepository.Resumes[resumeIndex].references.FindIndex(reference => reference.name == referenceName);
-
             if (referenceIndex == -1)
                 return NotFound("interes not found");
 
@@ -1080,16 +953,14 @@ namespace ResumeApi.Controllers
 
         #endregion
 
+
         #region PATCH
         [ETagFilter]
         [BasicAuthentication]
         [HttpPatch("{name}")]
         public ActionResult patch(string name, [FromBody] Resume newResume)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
@@ -1123,9 +994,7 @@ namespace ResumeApi.Controllers
         [HttpPatch("{name}/basics")]
         public ActionResult PatchBasic(string name, [FromBody] Basics newBasic)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
@@ -1153,9 +1022,7 @@ namespace ResumeApi.Controllers
         [HttpPatch("{name}/basics/location")]
         public ActionResult PatchLocation(string name, [FromBody] Location newLocation)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
@@ -1178,14 +1045,11 @@ namespace ResumeApi.Controllers
         [HttpPatch("{name}/basics/profiles/{network}")]
         public ActionResult PatchLocation(string name, string network, [FromBody] Profile newProfile)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int profileIndex = ResumeRepository.Resumes[resumeIndex].basics.profiles.FindIndex(profile => profile.network == network);
-
             if (profileIndex == -1)
                 return NotFound("profile not found");
 
@@ -1206,14 +1070,11 @@ namespace ResumeApi.Controllers
         [HttpPatch("{name}/work/{company}")]
         public ActionResult PatchWork(string name, string company, [FromBody] Work newWork)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int workIndex = ResumeRepository.Resumes[resumeIndex].work.FindIndex(work => work.company == company);
-
             if (workIndex == -1)
                 return NotFound("work not found");
 
@@ -1238,14 +1099,11 @@ namespace ResumeApi.Controllers
         [HttpPatch("{name}/volunteer/{organization}")]
         public ActionResult PatchVolunteer(string name, string organization, [FromBody] Volunteer newVolunteer)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int volunteerIndex = ResumeRepository.Resumes[resumeIndex].volunteer.FindIndex(volunteer => volunteer.organization == organization);
-
             if (volunteerIndex == -1)
                 return NotFound("volunteer not found");
 
@@ -1255,7 +1113,7 @@ namespace ResumeApi.Controllers
                 position = newVolunteer.position == null? ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex].position : newVolunteer.position,
                 website = newVolunteer.website == null? ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex].website : newVolunteer.website,
                 startDate = newVolunteer.startDate == null? ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex].startDate : newVolunteer.startDate,
-                endDate = newVolunteer.endDate == null? ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex].orgaendDatenization : newVolunteer.endDate,
+                endDate = newVolunteer.endDate == null? ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex].endDate : newVolunteer.endDate,
                 summary = newVolunteer.summary == null? ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex].summary : newVolunteer.summary,
                 highlights = newVolunteer.highlights == null? ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex].highlights : newVolunteer.highlights
             };
@@ -1270,14 +1128,11 @@ namespace ResumeApi.Controllers
         [HttpPatch("{name}/education/{institution}")]
         public ActionResult PatchEducation(string name, string institution, [FromBody] Education newEducation)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int educationIndex = ResumeRepository.Resumes[resumeIndex].education.FindIndex(education => education.institution == institution);
-
             if (educationIndex == -1)
                 return NotFound("education not found");
 
@@ -1302,14 +1157,11 @@ namespace ResumeApi.Controllers
         [HttpPatch("{name}/awards/{title}")]
         public ActionResult PatchAwards(string name, string title, [FromBody] Award newAward)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int awardIndex = ResumeRepository.Resumes[resumeIndex].awards.FindIndex(award => award.title == title);
-
             if (awardIndex == -1)
                 return NotFound("award not found");
 
@@ -1331,14 +1183,11 @@ namespace ResumeApi.Controllers
         [HttpPatch("{name}/publications/{publicationName}")]
         public ActionResult PatchPublications(string name, string publicationName, [FromBody] Publication newPublication)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int publicationIndex = ResumeRepository.Resumes[resumeIndex].publications.FindIndex(publication => publication.name == publicationName);
-
             if (publicationIndex == -1)
                 return NotFound("publication not found");
 
@@ -1358,17 +1207,14 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [BasicAuthentication]
-        [HttpPut("{name}/skills/{skillName}")]
-        public ActionResult PutSkill(string name, string skillName, [FromBody] Skill newSkill)
+        [HttpPatch("{name}/skills/{skillName}")]
+        public ActionResult PatchSkill(string name, string skillName, [FromBody] Skill newSkill)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int skillIndex = ResumeRepository.Resumes[resumeIndex].skills.FindIndex(skill => skill.name == skillName);
-
             if (skillIndex == -1)
                 return NotFound("skill not found");
 
@@ -1389,14 +1235,11 @@ namespace ResumeApi.Controllers
         [HttpPatch("{name}/languages/{language}")]
         public ActionResult PatchSkill(string name, string language, [FromBody] Language newLanguage)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int languageIndex = ResumeRepository.Resumes[resumeIndex].languages.FindIndex(item => item.language == language);
-
             if (languageIndex == -1)
                 return NotFound("language not found");
 
@@ -1416,14 +1259,11 @@ namespace ResumeApi.Controllers
         [HttpPatch("{name}/interests/{interestName}")]
         public ActionResult PatchInterest(string name, string interestName, [FromBody] Interest newInteres)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int interesIndex = ResumeRepository.Resumes[resumeIndex].interests.FindIndex(interest => interest.name == interestName);
-
             if (interesIndex == -1)
                 return NotFound("interes not found");
 
@@ -1443,14 +1283,11 @@ namespace ResumeApi.Controllers
         [HttpPatch("{name}/references/{referenceName}")]
         public ActionResult PatchReference(string name, string referenceName, [FromBody] Reference newReference)
         {
-
             int resumeIndex = GetResumeIndexByName(name);
-
             if (resumeIndex == -1)
                 return NotFound("resume not found");
 
             int referenceIndex = ResumeRepository.Resumes[resumeIndex].references.FindIndex(reference => reference.name == referenceName);
-
             if (referenceIndex == -1)
                 return NotFound("interes not found");
 
