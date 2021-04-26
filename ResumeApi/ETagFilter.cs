@@ -12,7 +12,7 @@ namespace ResumeApi
     {
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            if (context.HttpContext.Request.Method == "PUT")
+            if (context.HttpContext.Request.Method == "PUT" || context.HttpContext.Request.Method == "PATCH")
             {
                 string[] path = context.HttpContext.Request.Path.ToString().Split("/");
                 string key = null;
@@ -42,7 +42,7 @@ namespace ResumeApi
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            if (context.HttpContext.Request.Method == "GET")
+            if (context.HttpContext.Request.Method == "GET" || context.HttpContext.Request.Method == "HEAD")
             {
                 if (context.HttpContext.Response.StatusCode == 200)
                 {

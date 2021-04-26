@@ -58,10 +58,11 @@ namespace ResumeApi.Controllers
             ResumeRepository.etag = etagAll;
         }
 
-        #region GET
+        #region GET and HEAD
 
         [ETagFilter]
         [HttpGet]
+        [HttpHead]
         public ActionResult<List<Resume>> Get()
         {
             List<Resume> resumes = ResumeRepository.Resumes;
@@ -70,6 +71,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}")]
+        [HttpHead("{name}")]
         public ActionResult<Resume> GetByName(string name)
         {
             Resume resume = GetResumeByName(name);
@@ -82,6 +84,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/basics")]
+        [HttpHead("{name}/basics")]
         public ActionResult<Basics> GetBasics(string name)
         {
             Resume resume = GetResumeByName(name);
@@ -95,6 +98,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/basics/location")]
+        [HttpHead("{name}/basics/location")]
         public ActionResult<Location> GetLocation(string name)
         {
             Resume resume = GetResumeByName(name);
@@ -107,7 +111,8 @@ namespace ResumeApi.Controllers
         }
 
         [ETagFilter]
-        [HttpGet("{name}/basics/profiles")]
+        [HttpGet("{name}/basics/location")]
+        [HttpHead("{name}/basics/profiles")]
         public ActionResult<List<Profile>> GetProfiles(string name)
         {
             Resume resume = GetResumeByName(name);
@@ -121,6 +126,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/basics/profile/{network}")]
+        [HttpHead("{name}/basics/profile/{network}")]
         public ActionResult<Profile> GetProfile(string name, string network)
         {
 
@@ -139,6 +145,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/work")]
+        [HttpHead("{name}/work")]
         public ActionResult<List<Work>> GetWork(string name)
         {
 
@@ -154,6 +161,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/work/{company}")]
+        [HttpHead("{name}/work/{company}")]
         public ActionResult<Work> GetWork(string name, string company)
         {
 
@@ -173,6 +181,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/volunteer")]
+        [HttpHead("{name}/volunteer")]
         public ActionResult<List<Volunteer>> GetVolunteer(string name)
         {
 
@@ -188,6 +197,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/volunteer/{organization}")]
+        [HttpHead("{name}/volunteer/{organization}")]
         public ActionResult<Volunteer> GetVolunteer(string name, string organization)
         {
 
@@ -206,6 +216,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/education")]
+        [HttpHead("{name}/education")]
         public ActionResult<List<Education>> GetEducation(string name)
         {
 
@@ -221,6 +232,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/education/{institution}")]
+        [HttpHead("{name}/education/{institution}")]
         public ActionResult<Education> GetEducation(string name, string institution)
         {
 
@@ -238,6 +250,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/awards")]
+        [HttpHead("{name}/awards")]
         public ActionResult<List<Award>> GetAward(string name)
         {
 
@@ -253,6 +266,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/awards/{title}")]
+        [HttpHead("{name}/awards/{title}")]
         public ActionResult<Award> GetAward(string name, string title)
         {
 
@@ -270,6 +284,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/publications")]
+        [HttpHead("{name}/publications")]
         public ActionResult<List<Publication>> GetPublication(string name)
         {
 
@@ -285,6 +300,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/publications/{publicationName}")]
+        [HttpHead("{name}/publications/{publicationName}")]
         public ActionResult<Publication> GetPublication(string name, string publicationName)
         {
 
@@ -302,6 +318,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/skills")]
+        [HttpHead("{name}/skills")]
         public ActionResult<List<Skill>> GetSkill(string name)
         {
 
@@ -317,6 +334,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/skills/{skillName}")]
+        [HttpHead("{name}/skills/{skillName}")]
         public ActionResult<Skill> GetSkill(string name, string skillName)
         {
 
@@ -334,6 +352,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/languages")]
+        [HttpHead("{name}/languages")]
         public ActionResult<List<Language>> GetLanguage(string name)
         {
 
@@ -349,6 +368,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/languages/{languageName}")]
+        [HttpHead("{name}/languages/{languageName}")]
         public ActionResult<Language> GetLanguage(string name, string languageName)
         {
 
@@ -366,6 +386,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/interests")]
+        [HttpHead("{name}/interests")]
         public ActionResult<List<Interest>> GetInterest(string name)
         {
 
@@ -381,6 +402,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/interests/{interestName}")]
+        [HttpHead("{name}/interests/{interestName}")]
         public ActionResult<Interest> GetInterest(string name, string interestName)
         {
 
@@ -398,6 +420,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/references")]
+        [HttpHead("{name}/references")]
         public ActionResult<List<Reference>> GetReference(string name)
         {
 
@@ -413,6 +436,7 @@ namespace ResumeApi.Controllers
 
         [ETagFilter]
         [HttpGet("{name}/references/{referenceName}")]
+        [HttpHead("{name}/references/{referenceName}")]
         public ActionResult<Reference> GetReference(string name, string referenceName)
         {
 
@@ -1053,6 +1077,395 @@ namespace ResumeApi.Controllers
             SetEtag(ResumeRepository.Resumes[resumeIndex]);
             return NoContent();
         }
+
+        #endregion
+
+        #region PATCH
+        [ETagFilter]
+        [BasicAuthentication]
+        [HttpPatch("{name}")]
+        public ActionResult patch(string name, [FromBody] Resume newResume)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            string nameBefore = ResumeRepository.Resumes[resumeIndex].basics.name;
+
+            Resume auxResume = new Resume()
+            {
+                basics = newResume.basics == null ? ResumeRepository.Resumes[resumeIndex].basics : newResume.basics,
+                work = newResume.work == null ? ResumeRepository.Resumes[resumeIndex].work : newResume.work,
+                volunteer = newResume.volunteer == null ? ResumeRepository.Resumes[resumeIndex].volunteer : newResume.volunteer,
+                education = newResume.education == null ? ResumeRepository.Resumes[resumeIndex].education : newResume.education,
+                awards = newResume.awards == null ? ResumeRepository.Resumes[resumeIndex].awards : newResume.awards,
+                skills = newResume.skills == null ? ResumeRepository.Resumes[resumeIndex].skills : newResume.skills,
+                languages = newResume.languages == null ? ResumeRepository.Resumes[resumeIndex].languages : newResume.languages,
+                interests = newResume.interests == null ? ResumeRepository.Resumes[resumeIndex].interests : newResume.interests,
+                references = newResume.references == null ? ResumeRepository.Resumes[resumeIndex].references : newResume.references
+
+            };
+
+            ResumeRepository.Resumes[resumeIndex] = auxResume;
+
+            if (nameBefore != ResumeRepository.Resumes[resumeIndex].basics.name)
+                ResumeRepository.etags.Remove(nameBefore.Replace(" ", String.Empty));
+
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
+            return StatusCode((int)HttpStatusCode.NoContent);
+        }
+
+        [ETagFilter]
+        [BasicAuthentication]
+        [HttpPatch("{name}/basics")]
+        public ActionResult PatchBasic(string name, [FromBody] Basics newBasic)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            Basics auxBasics = new Basics()
+            {
+                name = newBasic.name == null ? ResumeRepository.Resumes[resumeIndex].basics.name : newBasic.name,
+                label = newBasic.label == null ? ResumeRepository.Resumes[resumeIndex].basics.label : newBasic.label,
+                picture = newBasic.picture == null ? ResumeRepository.Resumes[resumeIndex].basics.picture : newBasic.picture,
+                email = newBasic.email == null ? ResumeRepository.Resumes[resumeIndex].basics.email : newBasic.email,
+                phone = newBasic.phone == null ? ResumeRepository.Resumes[resumeIndex].basics.phone : newBasic.phone,
+                website = newBasic.website == null ? ResumeRepository.Resumes[resumeIndex].basics.website : newBasic.website,
+                summary = newBasic.summary == null ? ResumeRepository.Resumes[resumeIndex].basics.summary : newBasic.summary,
+                location = newBasic.location == null ? ResumeRepository.Resumes[resumeIndex].basics.location : newBasic.location,
+                profiles = newBasic.profiles == null ? ResumeRepository.Resumes[resumeIndex].basics.profiles : newBasic.profiles
+            };
+
+            ResumeRepository.Resumes[resumeIndex].basics = auxBasics;
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
+            return NoContent();
+
+        }
+
+        [ETagFilter]
+        [BasicAuthentication]
+        [HttpPatch("{name}/basics/location")]
+        public ActionResult PatchLocation(string name, [FromBody] Location newLocation)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            Location auxLocation = new Location()
+            {
+                address = newLocation.address == null? ResumeRepository.Resumes[resumeIndex].basics.location.address : newLocation.address,
+                postalCode = newLocation.postalCode == null? ResumeRepository.Resumes[resumeIndex].basics.location.postalCode : newLocation.postalCode,
+                city = newLocation.city == null? ResumeRepository.Resumes[resumeIndex].basics.location.city : newLocation.city,
+                countryCode = newLocation.countryCode == null? ResumeRepository.Resumes[resumeIndex].basics.location.countryCode : newLocation.countryCode,
+                region = newLocation.region == null? ResumeRepository.Resumes[resumeIndex].basics.location.region : newLocation.region
+            };
+
+            ResumeRepository.Resumes[resumeIndex].basics.location = auxLocation;
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
+            return NoContent();
+        }
+
+        [ETagFilter]
+        [BasicAuthentication]
+        [HttpPatch("{name}/basics/profiles/{network}")]
+        public ActionResult PatchLocation(string name, string network, [FromBody] Profile newProfile)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int profileIndex = ResumeRepository.Resumes[resumeIndex].basics.profiles.FindIndex(profile => profile.network == network);
+
+            if (profileIndex == -1)
+                return NotFound("profile not found");
+
+            Profile auxProfile = new Profile()
+            {
+                network = newProfile.network == null? ResumeRepository.Resumes[resumeIndex].basics.profiles[profileIndex].network : newProfile.network,
+                username = newProfile.username == null? ResumeRepository.Resumes[resumeIndex].basics.profiles[profileIndex].username : newProfile.username,
+                url = newProfile.url == null? ResumeRepository.Resumes[resumeIndex].basics.profiles[profileIndex].url : newProfile.url
+            };
+
+            ResumeRepository.Resumes[resumeIndex].basics.profiles[profileIndex] = auxProfile;
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
+            return NoContent();
+        }
+
+        [ETagFilter]
+        [BasicAuthentication]
+        [HttpPatch("{name}/work/{company}")]
+        public ActionResult PatchWork(string name, string company, [FromBody] Work newWork)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int workIndex = ResumeRepository.Resumes[resumeIndex].work.FindIndex(work => work.company == company);
+
+            if (workIndex == -1)
+                return NotFound("work not found");
+
+            Work auxWork = new Work()
+            {
+                company = newWork.company == null? ResumeRepository.Resumes[resumeIndex].work[workIndex].company : newWork.company,
+                position = newWork.position == null? ResumeRepository.Resumes[resumeIndex].work[workIndex].position : newWork.position,
+                website = newWork.website == null? ResumeRepository.Resumes[resumeIndex].work[workIndex].website : newWork.website,
+                startDate = newWork.startDate == null? ResumeRepository.Resumes[resumeIndex].work[workIndex].startDate : newWork.startDate,
+                endDate = newWork.endDate == null? ResumeRepository.Resumes[resumeIndex].work[workIndex].endDate : newWork.endDate,
+                summary = newWork.summary == null? ResumeRepository.Resumes[resumeIndex].work[workIndex].summary : newWork.summary,
+                highlights = newWork.highlights == null? ResumeRepository.Resumes[resumeIndex].work[workIndex].highlights : newWork.highlights
+            };
+
+            ResumeRepository.Resumes[resumeIndex].work[workIndex] = auxWork;
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
+            return NoContent();
+        }
+
+        [ETagFilter]
+        [BasicAuthentication]
+        [HttpPatch("{name}/volunteer/{organization}")]
+        public ActionResult PatchVolunteer(string name, string organization, [FromBody] Volunteer newVolunteer)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int volunteerIndex = ResumeRepository.Resumes[resumeIndex].volunteer.FindIndex(volunteer => volunteer.organization == organization);
+
+            if (volunteerIndex == -1)
+                return NotFound("volunteer not found");
+
+            Volunteer auxVolunteer = new Volunteer()
+            {
+                organization = newVolunteer.organization == null? ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex].organization : newVolunteer.organization,
+                position = newVolunteer.position == null? ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex].position : newVolunteer.position,
+                website = newVolunteer.website == null? ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex].website : newVolunteer.website,
+                startDate = newVolunteer.startDate == null? ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex].startDate : newVolunteer.startDate,
+                endDate = newVolunteer.endDate == null? ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex].orgaendDatenization : newVolunteer.endDate,
+                summary = newVolunteer.summary == null? ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex].summary : newVolunteer.summary,
+                highlights = newVolunteer.highlights == null? ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex].highlights : newVolunteer.highlights
+            };
+
+            ResumeRepository.Resumes[resumeIndex].volunteer[volunteerIndex] = auxVolunteer;
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
+            return NoContent();
+        }
+
+        [ETagFilter]
+        [BasicAuthentication]
+        [HttpPatch("{name}/education/{institution}")]
+        public ActionResult PatchEducation(string name, string institution, [FromBody] Education newEducation)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int educationIndex = ResumeRepository.Resumes[resumeIndex].education.FindIndex(education => education.institution == institution);
+
+            if (educationIndex == -1)
+                return NotFound("education not found");
+
+            Education auxEducation = new Education()
+            {
+                institution = newEducation.institution == null? ResumeRepository.Resumes[resumeIndex].education[educationIndex].institution : newEducation.institution,
+                area = newEducation.area == null? ResumeRepository.Resumes[resumeIndex].education[educationIndex].area : newEducation.area,
+                studyType = newEducation.studyType == null? ResumeRepository.Resumes[resumeIndex].education[educationIndex].studyType : newEducation.studyType,
+                startDate = newEducation.startDate == null? ResumeRepository.Resumes[resumeIndex].education[educationIndex].startDate : newEducation.startDate,
+                endDate = newEducation.endDate == null? ResumeRepository.Resumes[resumeIndex].education[educationIndex].endDate : newEducation.endDate,
+                gpa = newEducation.gpa == null? ResumeRepository.Resumes[resumeIndex].education[educationIndex].gpa : newEducation.gpa,
+                courses = newEducation.courses == null? ResumeRepository.Resumes[resumeIndex].education[educationIndex].courses : newEducation.courses
+            };
+
+            ResumeRepository.Resumes[resumeIndex].education[educationIndex] = auxEducation;
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
+            return NoContent();
+        }
+
+        [ETagFilter]
+        [BasicAuthentication]
+        [HttpPatch("{name}/awards/{title}")]
+        public ActionResult PatchAwards(string name, string title, [FromBody] Award newAward)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int awardIndex = ResumeRepository.Resumes[resumeIndex].awards.FindIndex(award => award.title == title);
+
+            if (awardIndex == -1)
+                return NotFound("award not found");
+
+            Award auxAward = new Award()
+            {
+                title = newAward.title == null? ResumeRepository.Resumes[resumeIndex].awards[awardIndex].title : newAward.title,
+                date = newAward.date == null? ResumeRepository.Resumes[resumeIndex].awards[awardIndex].date : newAward.date,
+                awarder = newAward.awarder == null? ResumeRepository.Resumes[resumeIndex].awards[awardIndex].awarder : newAward.awarder,
+                summary = newAward.summary == null? ResumeRepository.Resumes[resumeIndex].awards[awardIndex].summary : newAward.summary
+            };
+
+            ResumeRepository.Resumes[resumeIndex].awards[awardIndex] = auxAward;
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
+            return NoContent();
+        }
+
+        [ETagFilter]
+        [BasicAuthentication]
+        [HttpPatch("{name}/publications/{publicationName}")]
+        public ActionResult PatchPublications(string name, string publicationName, [FromBody] Publication newPublication)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int publicationIndex = ResumeRepository.Resumes[resumeIndex].publications.FindIndex(publication => publication.name == publicationName);
+
+            if (publicationIndex == -1)
+                return NotFound("publication not found");
+
+            Publication auxPublication = new Publication()
+            {
+                name = newPublication.name == null? ResumeRepository.Resumes[resumeIndex].publications[publicationIndex].name : newPublication.name,
+                publisher = newPublication.publisher == null? ResumeRepository.Resumes[resumeIndex].publications[publicationIndex].publisher : newPublication.publisher,
+                releaseDate = newPublication.releaseDate == null? ResumeRepository.Resumes[resumeIndex].publications[publicationIndex].releaseDate : newPublication.releaseDate,
+                website = newPublication.website == null? ResumeRepository.Resumes[resumeIndex].publications[publicationIndex].website : newPublication.website,
+                summary = newPublication.summary == null? ResumeRepository.Resumes[resumeIndex].publications[publicationIndex].summary : newPublication.summary
+            };
+
+            ResumeRepository.Resumes[resumeIndex].publications[publicationIndex] = auxPublication;
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
+            return NoContent();
+        }
+
+        [ETagFilter]
+        [BasicAuthentication]
+        [HttpPut("{name}/skills/{skillName}")]
+        public ActionResult PutSkill(string name, string skillName, [FromBody] Skill newSkill)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int skillIndex = ResumeRepository.Resumes[resumeIndex].skills.FindIndex(skill => skill.name == skillName);
+
+            if (skillIndex == -1)
+                return NotFound("skill not found");
+
+            Skill auxSkill = new Skill()
+            {
+                name = newSkill.name == null? ResumeRepository.Resumes[resumeIndex].skills[skillIndex].name : newSkill.name,
+                level = newSkill.level == null? ResumeRepository.Resumes[resumeIndex].skills[skillIndex].level : newSkill.level,
+                keywords = newSkill.keywords == null? ResumeRepository.Resumes[resumeIndex].skills[skillIndex].keywords : newSkill.keywords
+            };
+
+            ResumeRepository.Resumes[resumeIndex].skills[skillIndex] = auxSkill;
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
+            return NoContent();
+        }
+
+        [ETagFilter]
+        [BasicAuthentication]
+        [HttpPatch("{name}/languages/{language}")]
+        public ActionResult PatchSkill(string name, string language, [FromBody] Language newLanguage)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int languageIndex = ResumeRepository.Resumes[resumeIndex].languages.FindIndex(item => item.language == language);
+
+            if (languageIndex == -1)
+                return NotFound("language not found");
+
+            Language auxLanguage = new Language()
+            {
+                language = newLanguage.language == null ? ResumeRepository.Resumes[resumeIndex].languages[languageIndex].language : newLanguage.language,
+                fluency = newLanguage.fluency == null ? ResumeRepository.Resumes[resumeIndex].languages[languageIndex].fluency : newLanguage.fluency
+            };
+
+            ResumeRepository.Resumes[resumeIndex].languages[languageIndex] = auxLanguage;
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
+            return NoContent();
+        }
+
+        [ETagFilter]
+        [BasicAuthentication]
+        [HttpPatch("{name}/interests/{interestName}")]
+        public ActionResult PatchInterest(string name, string interestName, [FromBody] Interest newInteres)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int interesIndex = ResumeRepository.Resumes[resumeIndex].interests.FindIndex(interest => interest.name == interestName);
+
+            if (interesIndex == -1)
+                return NotFound("interes not found");
+
+            Interest auxInterest = new Interest()
+            {
+                name = newInteres.name == null? ResumeRepository.Resumes[resumeIndex].interests[interesIndex].name : newInteres.name,
+                keywords = newInteres.keywords == null? ResumeRepository.Resumes[resumeIndex].interests[interesIndex].keywords : newInteres.keywords
+            };
+
+            ResumeRepository.Resumes[resumeIndex].interests[interesIndex] = auxInterest;
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
+            return NoContent();
+        }
+
+        [ETagFilter]
+        [BasicAuthentication]
+        [HttpPatch("{name}/references/{referenceName}")]
+        public ActionResult PatchReference(string name, string referenceName, [FromBody] Reference newReference)
+        {
+
+            int resumeIndex = GetResumeIndexByName(name);
+
+            if (resumeIndex == -1)
+                return NotFound("resume not found");
+
+            int referenceIndex = ResumeRepository.Resumes[resumeIndex].references.FindIndex(reference => reference.name == referenceName);
+
+            if (referenceIndex == -1)
+                return NotFound("interes not found");
+
+            Reference auxReference = new Reference()
+            {
+                name = newReference.name == null? ResumeRepository.Resumes[resumeIndex].references[referenceIndex].name : newReference.name,
+                reference = newReference.reference == null? ResumeRepository.Resumes[resumeIndex].references[referenceIndex].reference : newReference.reference
+            };
+
+            ResumeRepository.Resumes[resumeIndex].references[referenceIndex] = auxReference;
+            SetEtag(ResumeRepository.Resumes[resumeIndex]);
+            return NoContent();
+        }
+        #endregion
+
     }
-    #endregion
+
 }
