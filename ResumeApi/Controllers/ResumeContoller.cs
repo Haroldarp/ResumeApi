@@ -107,7 +107,7 @@ namespace ResumeApi.Controllers
         }
 
         [ETagFilter]
-        [HttpGet("{name}/basics/location")]
+        [HttpGet("{name}/basics/profiles")]
         [HttpHead("{name}/basics/profiles")]
         public ActionResult<List<Profile>> GetProfiles(string name)
         {
@@ -120,8 +120,8 @@ namespace ResumeApi.Controllers
         }
 
         [ETagFilter]
-        [HttpGet("{name}/basics/profile/{network}")]
-        [HttpHead("{name}/basics/profile/{network}")]
+        [HttpGet("{name}/basics/profiles/{network}")]
+        [HttpHead("{name}/basics/profiles/{network}")]
         public ActionResult<Profile> GetProfile(string name, string network)
         {
             Resume resume = GetResumeByName(name);
